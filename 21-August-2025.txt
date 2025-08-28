@@ -1,0 +1,40 @@
+what is systemd ?
+just do man systemd
+-it is a service manager for LOS
+-runs as first process on the boot
+-acts as initial system that brings up the userspace and maintains it 
+-it isn't directly invoked by the user, but installed as the /sbin/init symlink and started 
+during early boot 
+what does that mean?
+like /boot directory of the kernel or something else
+
+
+what services does it manage?
+-userspace
+
+what are the properties of daemon process ?
+:-in the book 'The advanced programming in the UNIX environment' chapter 13 page 463
+
+-these are often started when the system is bootstrapped and terminate only when it is shutdown
+-they don't have a controlling terminal
+-runs in the bg
+
+how can it report error conditions without a controlling terminal
+
+how can i check if the system i am running is V based or BSD-based system
+
+ps -axj for BSD-based systems
+ps -efj for V-based systems
+
+root           2       0       0       0  0 15:26 ?        00:00:00 [kthreadd]
+
+what is a kernel proccess?
+:-anything with parent process id of 0 is usually a kernel process
+-special and exists throughout the lifetime of the system
+-also doesn't have a controlling terminal and run with sudo privillages
+
+imp:-kthreadd is the special kernel process that creates other kernel process
+-because of which it is like the parent of the created kernel daemons
+
+what is a controlling terminal:-
+probably a terminal that can control the system and its proccess.

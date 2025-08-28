@@ -1,0 +1,13 @@
+okay so basically i didn't do much for the last 2 days and today i just deleted
+my previous logs. it is unfortunate but it is what it is.
+i will be starting with a new slate from now on.
+so anyways, i started researching on the linux kernel source code and the journey 
+of compilling it and running it on qemu of my device 
+it all started on 21st july. i read a bunch of documentation.
+    linux-6.15.9/Documentation/admin-guide/README.rst
+    linux-6.15.9/README
+    linux-6.15.9/Documentation/doc-guide/contributing.rst
+    linux-6.15.9/Documentation/admin-guide/initrd.rst
+    linux-6.15.9/Documentation/process
+    linux-6.15.9/Documentation/process/howto.rst
+    

@@ -1,0 +1,12 @@
+evince:- pdf viewer
+
+obsidean:- notepad in linux
+
+how to create a symlink in linux:-
+ln -s(creates a symbolic link) [source(full path)] destination(full path)
+
+
+how to write a systemd?
+
+
+

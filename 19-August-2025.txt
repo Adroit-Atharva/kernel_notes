@@ -1,0 +1,26 @@
+command to update grub in fedora:-
+sudo grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg
+
+or 
+
+use this:-
+sudo grub2-mkconfig -o /boot/grub2/grub.cfg
+
+
+command to create initramfs in fedora:-
+dracut --kver [version of kernerl] -f(force) [name of initramfs]
+
+listing the contents of initramfs:-
+lsinitrd -v [name]
+
+my fstab is empty in the initramfs created while compiling the kernel:-
+-rw-r--r--   1 root     root            0 Jul 24 05:30 etc/fstab.empty
+
+lrwxrwxrwx   1 root     root           23 Jul 24 05:30 init -> usr/lib/systemd/systemd
+drwxr-xr-x   2 root     root            0 Jul 24 05:30 sysroot
+-rw-r--r--   1 root     root          614 Jun 25 18:06 usr/lib/systemd/system/initrd-switch-root.service
+-rw-r--r--   1 root     root          779 Jun 25 18:06 usr/lib/systemd/system/initrd-switch-root.target
+drwxr-xr-x   2 root     root            0 Jul 24 05:30 usr/lib/systemd/system/initrd-switch-root.target.wants
+lrwxrwxrwx   1 root     root           25 Jul 24 05:30 usr/lib/systemd/system/initrd-switch-root.target.wants/plymouth-start.service -> ../plymouth-start.service
+lrwxrwxrwx   1 root     root           31 Jul 24 05:30 usr/lib/systemd/system/initrd-switch-root.target.wants/plymouth-switch-root.service -> ../plymouth-switch-root.service
+-rw-r--r--   1 root     root          315 Jul  3 05:30 usr/lib/systemd/system/plymouth-switch-root.service

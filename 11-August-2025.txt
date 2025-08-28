@@ -1,0 +1,181 @@
+okay fresh morning, fresh week and fresh me, it's monday and i am sick. i have cold and
+I have been coughing non stop since last night. i didn't feel like going to doctor cause i wanted 
+to get some work done. 
+
+okay so basically i haven't worked at all for almost a week 
+
+today i will be reading some documentation and investigating the initrd-switch.root failed 
+error. i will also reconfigure the kernel source code and compile it. 
+
+    linux-6.15.9/README
+    directed me to 
+    linux-6.15.9/Documentation/admin-guide/README.rst
+
+note:- check any Linux FTP sites for lonux documentation project
+
+i am reading the following documentation again cause linux-6.15.9/Documentation/admin-guide/README.rst
+sent me there:-
+    linux-6.15.9/Documentation/process/changes.rst
+plus it helps me have all the tools needed for compilling the kernel and hopefully proceed 
+with the development process
+
+    reiserfsprogs          3.6.3            reiserfsck -V
+    what is that ?
+    and that 
+    pccardctl -V
+    udev                   081              udevd --version
+    grub                   0.93             grub --version || grub-install --version
+    mcelog                 0.6              mcelog --version
+
+okay 
+ now i just ran following command to create kernel documentation:-
+ sudo make htmldocs
+ but that made my laptop go crazy
+ note to myself:- never run that command again
+ or 
+ sudo make pdfdocs
+
+okay so everything neccessary has been installed
+apparently i can store the output of the source compilation in another directory by using the following
+``make O=output/dir``
+
+   When compiling the kernel, all output files will per default be
+   stored together with the kernel source code.
+   Using the option ``make O=output/dir`` allows you to specify an alternate
+   place for the output files (including .config).
+   Example::
+
+     kernel source code: /usr/src/linux-6.x
+     build directory:    /home/name/build/kernel
+
+   To configure and build the kernel, use::
+
+     cd /usr/src/linux-6.x
+     make O=/home/name/build/kernel menuconfig
+     make O=/home/name/build/kernel
+     sudo make O=/home/name/build/kernel modules_install install
+
+   Please note: If the ``O=output/dir`` option is used, then it must be
+   used for all invocations of make.
+
+   i can't do it 
+   it was a minor error, just needed to install ncurses-devel
+    okay after doing 
+    sudo make O=/home/atharva/Desktop/Project/build/kernel menuconfig
+    i got following inside build/kernel:-
+
+    drwxr-xr-x. 1 atharva atharva  12 Aug 11 11:22 ..
+    -rw-r--r--. 1 atharva atharva  39 Aug 11 11:25 .gitignore
+    drwxr-xr-x. 1 atharva atharva  24 Aug 11 11:25 scripts
+    lrwxrwxrwx. 1 atharva atharva  42 Aug 11 11:26 source -> /home/atharva/Desktop/Project/linux-6.15.9
+    -rw-r--r--. 1 atharva atharva 219 Aug 11 11:26 Makefile
+    drwxr-xr-x. 1 atharva atharva  62 Aug 11 11:26 .
+
+    and in total the size of it is just 32K
+    i am not in the mood to compile the whole kernel right now so i will do something else.
+    okay i also found a bunch of rootfses and downloaded them
+
+remember this:-
+    The kernel's development process may come across as strange and
+intimidating to new developers, but there are good reasons and solid
+experience behind it.  A developer who does not understand the kernel
+community's ways (or, worse, who tries to flout or circumvent them) will
+have a frustrating experience in store.  The development community, while
+being helpful to those who are trying to learn, has little time for those
+who will not listen or who do not care about the development process.   
+
+note:- follow the kernel development community's ways or go home
+
+It is hoped that those who read this document will be able to avoid that
+frustrating experience.  There is a lot of material here, but the effort
+involved in reading it will be repaid in short order.  The development
+community is always in need of developers who will help to make the kernel
+better; the following text should help you - or those who work for you -
+join our community.
+
+thank you, thank you
+
+note:- getting our code code into mainline kernel is profitable?
+mainline kernel is maintained by Linus Torvalds
+
+
+kernel development process:-
+    uses rolling development cycle
+    at the start of each cycle a 'merge window' is open 
+    the merge window lasts for approximately 2 weeks 
+    the code which is deemed sufficiently stable by ther kernel community is merged in the
+    mainline kernel.
+    after the end of merge window Linus Torvalds will release the first rc(release candidate)
+     The -rc1 release is the signal that the time to
+    merge new features has passed, and that the time to stabilize the next
+    kernel has begun.
+
+    note:- DO NOT try to merge new features outside of the merge window 
+    just wait it out till next merge window.
+
+    Over the next six to ten weeks, only patches which fix problems should be
+    on a more significant change will be
+    allowed, but such occasions are rare;
+
+    As fixes make their way into the mainline, the patch rate will slow over
+    time.  Linus releases new -rc kernels about once a week; a normal series
+    will get up to somewhere between -rc6 and -rc9 before the kernel is
+    considered to be sufficiently stable and the final release is made.
+    At that point the whole process starts over again.
+
+    what is regressions?
+    A software regression is a type of software bug 
+    where a feature that has worked before stops working
+    note:- avoid regressions, try to fix all the known regressions in our code before 
+    the next stable release is made 
+    it's close to imposible to fix all the regressions which is why most of 5.x kernels are
+    sent out with handful of regressions which hopefully aren't serious
+
+    following is how a linux kernel is named:-
+    A.B.C 
+    A=current kernel 
+    B=the release candidate for current kernel 
+    c=the stable version of the released candidate and the kernel
+
+    okay i am stopping at lifecycle of a patch in process.rst at line 140, ironic 
+
+i am bored so i am reading howto.rst now 
+
+read and learn from following reference books:-
+ - "The C Programming Language" by Kernighan and Ritchie [Prentice Hall]
+ - "Practical C Programming" by Steve Oualline [O'Reilly]
+ - "C:  A Reference Manual" by Harbison and Steele [Prentice Hall]
+
+ the linux kernel is written in GNU c and GNU tool chain
+
+ Please remember that you are trying to learn how to work with the
+existing development community.  It is a diverse group of people, with
+high standards for coding, style and procedure.  These standards have
+been created over time based on what they have found to work best for
+such a large and geographically dispersed team.  Try to learn as much as
+possible about these standards ahead of time, as they are well
+documented; do not expect people to adapt to you or your company's way
+of doing things.
+
+fair enough
+
+note:-Documentation/process/coding-style.rst
+read that later and following:-
+Documentation/process/management-style.rst
+https://kernelnewbies.org
+https://kernelnewbies.org/KernelJanitors
+
+
+Before making any actual modifications to the Linux kernel code, it is
+imperative to understand how the code in question works.  For this
+purpose, nothing is better than reading through it directly (most tricky
+bits are commented well), perhaps even with the help of specialized
+tools.  One such tool that is particularly recommended is the Linux
+Cross-Reference project, which is able to present source code in a
+self-referential, indexed webpage format. An excellent up-to-date
+repository of the kernel code may be found at:
+
+	https://elixir.bootlin.com/
+
+i am again bored so i will take a lunch break and do something else
+hopefully my break is short 
