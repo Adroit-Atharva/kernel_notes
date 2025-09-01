@@ -1,0 +1,47 @@
+okay i didn't study at all yesterday and didn't do anything today either so i just tried to solve the issue using chatgpt but it seems like i was wrong, chatgpt has been a little helpful, my intuition says that i need to reconfigure the kernel cause it probably requires something like virtuo block.
+
+
+okay i did the following steps:-
+1. modprobe nbd max_part=8
+2. qemu-nbd --connect=/dev/nbd0 /var/lib/vz/images/100/vm-100-disk-1.qcow2
+3. fdisk /dev/nbd0 -l
+
+and now i can see:-
+/dev/nbd0p1    2048     4095     2048   1M BIOS boot
+/dev/nbd0p2    4096  2101247  2097152   1G Linux extended boot
+/dev/nbd0p3 2101248 20969471 18868224   9G Linux filesystem
+
+
+maybe i can pass /dev/nbd0p3 to root!!!
+wait, it is in use:-
+qemu-system-x86_64 -smp 3 -m 3G -enable-kvm -drive file=fedora_everything.qcow2,format=qcow2,if=ide -kernel /boot/Atharva-linux-6.16.3 -initrd /boot/initramfs-linux-Atharva.img -append "root=/dev/nbd0p3 ro console=ttyS0" -nographic
+qemu-system-x86_64: -drive file=fedora_everything.qcow2,format=qcow2,if=ide: Failed to get "write" lock
+Is another process using the image [fedora_everything.qcow2]?
+
+
+i mounted that nbd0p3 on /mnt/fedora_everything_qcow2
+
+mount /dev/nbd0pe mount /dev/nbd0p1 /mnt/somepoint/
+
+
+cause it had the linux fs
+now /mnt/fedora_everything_qcow2 has home and root
+
+the root is of only 138 bytes
+
+
+ohhhhhhhhhhhh i can access the files within my virtual fedora!!!!!. somethig new 
+
+i just needed to go inside /home/atharva 
+the root is of 1.6G in total, after i did du -sh
+
+maybe i can use this fs for the real rootfs,
+i can create a raw image, copy all this in that image and pass it to the qemu like last time
+
+i think it will give me problem since the fedora uses btrfs type of fs compared to my arch linux's ext4, maybe it will give me issue, maybe it won't. probably depends on how the kernel was configured 
+
+to disconnect the nbd just run the following command:-
+sudo qemu-nbd -disconnect /dev/nbd0
+
+before that unmount the nbd0p3 
+umount /dev/nbd0p3 /mnt/fedora_everything_qcow2
