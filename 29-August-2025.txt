@@ -1,0 +1,75 @@
+what is a disk image ?
+it is snapshot of storage device's structure and data.
+typically stored in one or more computer files on another storage device.
+
+what does snapshot of it mean?
+don't know
+
+qemu has 2 formats of images:-
+1. raw
+2. qcow2 (which i am going to use) (more versatile and occupies less space on the hdd and enable multiple snapshots)
+
+command to create a raw disk image:-
+qemu-img create my_img.raw mysize
+ex:- qemu-img create fedora.raw 10G
+
+command to create a disk image:-
+qemu-img create my_image.img mysize
+ex:- qemu-img create fedora.img 2G
+
+command to create a qcow2 format disk image:-
+qemu-img create -f qcow2 my_img.qcow2 10G
+
+to convert image formats(from raw to qcow2):-
+qemu-img convert -f raw -O qcow2  my_img1.raw dest.qcow2
+
+to shrink the size of the image:-
+qemu-img resize --shrink my_img.qcow2 -1G
+
+to check the info on img:-
+qemu-img info filename 
+fdisk -l filename
+
+
+just needed to install the full version of qemu along with virtual manager and other stuff like libvert which is a service that manages kvm/qemu
+sudo pacman -S qemu-full virt-manager virt-viewer dnsmasq vde2 bridge-utils openbsd-netcat libvirt ovmf
+ 
+//needed to enable the service
+sudo systemctl enable --now libvirtd.service
+qemu-system-x86_64 -cdrom Fedora-Workstation-Live-42-1.1.x86_64.iso -m 2G -cpu host --enable-kvm
+
+
+//it is very difficult to run it in a low end device
+
+to install the system on a disk image:-
+qemu-system-x86_64 \
+  -cdrom ubuntu-21.04-desktop-amd64.iso \
+  -drive file=ubuntu.qcow2,format=qcow2 \
+  -enable-kvm \
+  -m 2G \
+  -smp 2  
+
+
+//last time piyush and sir created a raw img and mounted it on the system
+//need to check the following in detail
+to mount a qcow2 image on the system:-
+1. modprobe nbd max_part=8
+2. qemu-nbd --connect=/dev/nbd0 /var/lib/vz/images/100/vm-100-disk-1.qcow2
+3. fdisk /dev/nbd0 -l
+4. mount /dev/nbd0p1 /mnt/somepoint/
+   
+okay now i can move to compiling the kernel
+
+getting the following errors:-
+ld: vmlinux.o: in function `sbrmi_i2c_probe':
+rmi-i2c.c:(.text+0x9fdb16): undefined reference to `__devm_regmap_init_i2c'
+make[2]: *** [scripts/Makefile.vmlinux:91: vmlinux.unstripped] Error 1
+make[1]: *** [/home/atharva/Desktop/Project/linux-6.16.3/Makefile:1236: vmlinux] Error 2
+make: *** [Makefile:248: __sub-make] Error 2
+
+check the following:-
+./drivers/misc/amd-sbi/rmi-i2c.c
+/home/atharva/Desktop/Project/linux-6.16.3/Makefile (line:248)(--sub-make)
+/usr/include (from vs code extension, i found out that in this directory there should delay.h)
+ 
+//just needed to remove one thing from config file

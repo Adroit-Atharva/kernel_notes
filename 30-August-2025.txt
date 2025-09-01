@@ -1,0 +1,106 @@
+going to install fedora on qemu disk image of format qcow2
+
+qemu-system-x86_64 \
+  -cdrom Fedora-Everything-netinst-x86_64-42-1.1.iso \
+  -drive file=fedora_everything.qcow2,format=qcow2 \
+  -enable-kvm \
+  -m 3G \
+  -smp 3  
+
+installing it on fedora_everything.qcow2 of 10G
+created that using following command:-
+qemu-img create -f qcow2 fedora_everything.qcow2 10G
+
+after the installation use the following command to boot back into the system:-
+qemu-system-x86_64 \
+  -drive file=fedora_everything.qcow2,format=qcow2 \
+  -enable-kvm \
+  -m 3G \
+  -smp 3
+
+it also saves the files inside the system and is very minimalistic
+very happy to use fedora again
+
+now can i just pass the compiled kernel and its initramfs to it,
+i can pass the uuid of the virtual system as a kernel command using append 
+
+fstab is in:-
+/etc
+
+inside the virtual fedora, UUID of its root is:-
+UUID=dd384c01-d15a-4cc7-aa47-f5dc1990390e
+
+//use the below command to run the compiled kernel
+qemu-system-x86_64 \
+  -enable-kvm \
+  -m 2048 \
+  -kernel /boot/vmlinuz-6.15.7 \
+  -initrd /boot/initramfs-6.15.7.img \
+  -append "root=/dev/mapper/fedora-root ro console=ttyS0 rd.shell systemd.log_level=debug systemd.log_target=console" \
+  -nographic
+
+
+qemu-system-x86_64 -enable-kvm -m 2048 -kernel /boot/Atharva-linux-6.16.3 -initrd /boot/initramfs-linux-Atharva.img -append "root=UUID=dd384c01-d15a-4cc7-aa47-f5dc1990390e ro console=ttyS0" -nographic
+
+
+after i do the following:-
+qemu-system-x86_64 -m 3G -kernel /boot/Atharva-linux-6.16.3 -initrd /boot/initramfs-linux-Atharva.img -append "ro console=ttyS0" -nographic
+
+i am getting the following error:-
+:: running early hook [udev]
+Warning: /lib/modules/6.16.3Atharva/modules.devname not found - ignoring
+Starting systemd-udevd version 257.8-2-arch
+:: running hook [udev]
+:: Triggering uevents...
+:: running hook [keymap]
+:: Loading keymap...kbd_mode: KDSKBMODE: Inappropriate ioctl for device
+done.
+ERROR: device '' not found. Skipping fsck.
+:: mounting '' on real root
+mount: /new_root: fsconfig() failed: : Can't lookup blockdev.
+       dmesg(1) may have more information after failed mount system call.
+ERROR: Failed to mount '' on real root
+You are now being dropped into an emergency shell.
+sh: can't access tty; job control turned off
+[rootfs ~]# 
+
+
+after doing the following command:-
+qemu-system-x86_64 -m 3G -kernel /boot/Atharva-linux-6.16.3 -initrd /boot/initramfs-linux-Atharva.img -append "root=UUID=dd384c01-d15a-4cc7-aa47-f5dc1990390e ro console=ttyS0" -nographic
+
+i am getting the following error:-
+:: running early hook [udev]
+Warning: /lib/modules/6.16.3Atharva/modules.devname not found - ignoring
+Starting systemd-udevd version 257.8-2-arch
+:: running hook [udev]
+:: Triggering uevents...
+:: running hook [keymap]
+:: Loading keymap...kbd_mode: KDSKBMODE: Inappropriate ioctl for device
+done.
+Waiting 10 seconds for device /dev/disk/by-uuid/dd384c01-d15a-4cc7-aa47-f5dc1990390e ...
+Waiting 10 seconds for device /dev/disk/by-uuid/dd384c01-d15a-4cc7-aa47-f5dc1990390e ...
+ERROR: device 'UUID=dd384c01-d15a-4cc7-aa47-f5dc1990390e' not found. Skipping fsck.
+:: mounting 'UUID=dd384c01-d15a-4cc7-aa47-f5dc1990390e' on real root
+mount: /new_root: can't find UUID=dd384c01-d15a-4cc7-aa47-f5dc1990390e.
+ERROR: Failed to mount 'UUID=dd384c01-d15a-4cc7-aa47-f5dc1990390e' on real root
+You are now being dropped into an emergency shell.
+sh: can't access tty; job control turned off
+
+
+it keeps giving the same error for all other versions of it:-
+it keeps failing to mount the disk on the real root
+what does 'real root' even mean?
+probably the real rootfs 
+mounting disk on real rootfs ?
+not the other way round?
+
+maybe the following command will work:-
+qemu-system-x86_64 -m 3G -kernel /boot/Atharva-linux-6.16.3 -initrd /boot/initramfs-linux-Atharva.img -append "root=/home/atharva/Downloads/fedora_everything.qcow2 ro console=ttyS0" -nographic
+
+dmesg doesn't help me much
+
+maybe i should create a disk image, create a linux environment on it like last time and then use it as a kernel command line argument
+
+
+need to mount qcow2 
+
