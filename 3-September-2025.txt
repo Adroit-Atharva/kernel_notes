@@ -71,3 +71,23 @@ lrwxrwxrwx 1 root root      22 Aug  8 02:56 init -> ../lib/systemd/systemd
 the problem probably lies in mkinitcpio or the way i configured the kernel
 what is fsck?
 
+
+to extract the contents of initramfs use the following:-
+lsinitcpio -x /boot/initramfs-linux-Atharva.img usr/bin/run-init -c > run-init
+
+
+
+i finally did it, i almost cried but fuckkkkkkk yeahhhhhhhhhh
+all i did was install arch linux on that image and just used the following command:-
+qemu-system-x86_64 -drive file=mini_arch.qcow2,format=qcow2 -smp 3 -m 3G -enable-kvm -kernel /boot/Atharva-linux-6.16.3 -initrd /boot/initramfs-linux-Atharva.img -append "root=/dev/sda2 ro console=ttyS0" -nographic
+
+or 
+
+i can use :-
+qemu-system-x86_64 -drive file=mini_arch.qcow2,format=qcow2 -smp 3 -m 3G -enable-kvm -kernel /boot/Atharva-linux-6.16.3 -initrd /boot/initramfs-linux-Atharva.img -append "root=/dev/sda2 ro console=ttyS0"
+
+if i want to use the gui of qemu
+
+i am so proud of myself.
+
+but now i have to check if i can change the fs type while configuring the kernel
