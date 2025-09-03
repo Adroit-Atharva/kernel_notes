@@ -91,3 +91,21 @@ if i want to use the gui of qemu
 i am so proud of myself.
 
 but now i have to check if i can change the fs type while configuring the kernel
+
+after adding support to btrfs the arch linux still works
+qemu-system-x86_64 -drive file=~/Downloads/mini_arch.qcow2,format=qcow2 -smp 3 -m 3G -enable-kvm -kernel /boot/vmlinuz-lord-Atharva -initrd /boot/initramfs-linux-lord-Atharva.img -append "root=/dev/sda2 ro console=ttyS0" -nographic
+
+
+for fedora_everything.qcow2 it gives following error:-
+:: mounting '/dev/sda3' on real root
+[    1.882751] BTRFS: device label fedora_fedora devid 1 transid 378 /dev/sda3 (8:3) scanned by mount (17)
+[    1.884768] BTRFS info (device sda3): first mount of filesystem dd384c01-d15a-4cc7-aa47-f5dc1990390e
+[    1.885751] BTRFS info (device sda3): using crc32c (crc32c-generic) checksum algorithm
+[    1.886604] BTRFS info (device sda3): using free-space-tree
+:: running cleanup hook [udev]
+ERROR: Root device mounted successfully, but /sbin/init does not exist.
+Bailing out, you are on your own. Good luck.
+
+sh: can't access tty; job control turned off
+
+
