@@ -28,3 +28,9 @@ i think since fedora doesn't have a dedicated root user. it doesn't have a dedic
 if it does get a dedicated root user then it may get a dedicated root directory which might solve the issue.
 
 i will try reinstalling fedora tommorrow mourning with a dedicated root user cause it will take some time
+
+check where the memory realted files are 
+
+linux-6.16.3/mm
+linux-6.16.3/Documentation/admin-guide/mm/index.rst
+linux-6.16.3/Documentation/admin-guide/mm/concepts.rst - for jargons
