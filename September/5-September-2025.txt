@@ -1,0 +1,11 @@
+qemu-system-x86_64 -drive file=~/Downloads/mini_arch.qcow2,format=qcow2 -smp 3 -m 3G -enable-kvm -kernel /boot/vmlinuz-lord-Atharva -initrd /boot/initramfs-Atharva-dracut.img -append "root=/dev/sda2 ro console=ttyS0" -nographic
+
+
+the initramfs generated using dracut works with mini_arch
+
+
+check where the memory realted files are 
+
+linux-6.16.3/mm
+linux-6.16.3/Documentation/admin-guide/mm/index.rst
+linux-6.16.3/Documentation/admin-guide/mm/concepts.rst - for jargons

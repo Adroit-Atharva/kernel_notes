@@ -1,0 +1,68 @@
+watching a youtube video:-
+introduction to memory management in linux byt The Linux Foundation'
+didn't understand much so going to read:-
+Documentation/admin-guide/mm/index.rst
+
+okay so mm is a subsystem that implements vitual memory and demand paging and a bunch of other stuff.
+what is virtual memory?
+what is demand paging?
+
+the mm system can be configured via /proc fs and can be queried via the sysctl(APIs).
+read Documentation/admin-guide/sysctl/vm.rst and in `man 5 proc`.
+read the following to get familiar with jargons:-
+Documentation/admin-guide/mm/concepts.rst.2
+
+
+now i am reading:-
+Documentation/admin-guide/sysctl/vm.rst
+
+The files inside /proc/sys/vm can be used to tune the operations of vm subsys of the linux.
+it is also used to writeout the dirty data to disk.
+don't know what that means
+
+Default values and initialization routines for most of these
+files can be found in mm/swap.c.
+
+a bunch of files are inside /proc/sys/vm:-
+admin_reserve_kbytes:- it defaults to min(3% of free pages, 8MB), it is a one time initialization and never recalculated.
+
+i don't understand most of it so i will read the following:-
+Documentation/admin-guide/mm/concepts.rst.
+
+The memory
+management for systems without an MMU is called ``nommu``
+
+what is memory hotplug?
+
+the physical memory is limited and may not always be contiguous,
+but it can be accessed as a 'set' of 'distinct address ranges'.
+plus different cpu architectures and their various implementations have different
+view of how these(the address of physical memory) address ranges are defined
+
+basically almost every cpu architecture has their own way of defining the address ranges.
+this along with the fact that memory may not always be contiguous makes it difficult 
+to deal with the physical memory directly.
+
+to avoid this difficulty/complexity the concept of virtual memory was developed.
+
+The virtual memory 
+abstracts(Hides complex details to offer a simpler interface) 
+
+the details of physical memory from the 
+
+application software(which gives it the illusion of having more memory by hiding 
+fragmentation, address translation, memory sharing, and disk swapping), 
+
+allowing it to keep only needed information in the
+physical memory (demand paging) and provides a mechanism for the
+protection and controlled sharing of data between processes.
+
+note:- the virtual addresses are produced by the cpu
+then these virtual addresses are mapped to the correct physical memory address.
+this is done using the page tables maintained by the os.
+
+The MMU uses a fast cache called the 
+TLB (Translation Lookaside Buffer) to speed up translation.
+
+everything in the system uses virtual memory, except bootloader and the inital 
+stages of the boot 
