@@ -4,8 +4,18 @@ didn't understand much so going to read:-
 Documentation/admin-guide/mm/index.rst
 
 okay so mm is a subsystem that implements vitual memory and demand paging and a bunch of other stuff.
+
 what is virtual memory?
+-> line number 48
+
 what is demand paging?
+-> also referred to as lazy loading. a technique where the sys only loads the page 
+of a program into physical memory only when it is needed.
+
+what is a page?
+chatgpt-> fixed size block of vm, it is usually of 4 or 8kb in size. reduces fragmentation.
+Documentation-> go to line number 94 before that as the Documentation is quite confusing with physical and virtual memory pages.
+start reading linux-6.16.3/Documentation/admin-guide/mm/concepts.rst from line 40.
 
 the mm system can be configured via /proc fs and can be queried via the sysctl(APIs).
 read Documentation/admin-guide/sysctl/vm.rst and in `man 5 proc`.
@@ -33,6 +43,9 @@ The memory
 management for systems without an MMU is called ``nommu``
 
 what is memory hotplug?
+->ability to add or remove hardware components—such as 
+USB devices, hard drives, or network cards—while 
+a computer system is running, without the need to shut it down or reboot.
 
 the physical memory is limited and may not always be contiguous,
 but it can be accessed as a 'set' of 'distinct address ranges'.
@@ -66,3 +79,23 @@ TLB (Translation Lookaside Buffer) to speed up translation.
 
 everything in the system uses virtual memory, except bootloader and the inital 
 stages of the boot 
+
+the cpu while decoding the instruction from the sys memory,
+it translates virtual address encoded in that instruction into physical address
+that the memory contoller can understand.
+
+what is a memory contoller?
+->It is a hardware component. 
+manages data flow between CPU and RAM. 
+It acts as an intermediary, 
+ensuring that data is read from and written to memory efficiently and correctly.
+
+
+difference between physical memory page and a virtual memory page:-
+physical memory:-
+A physical memory page, also called a page frame, is a fixed-size block in real RAM (physical memory) used by the system to store data.
+Page frames are contiguous chunks of memory on the hardware—what the CPU actually reads from and writes to.
+
+virtual memory:-
+A virtual memory page (or just "page") is a fixed-size block in your program’s virtual address space—a logical view of memory provided by the OS.
+Programs use these pages when accessing memory, but these pages don’t correspond to physical RAM until the data is actually loaded into a page frame.
