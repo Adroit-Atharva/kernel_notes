@@ -5,23 +5,17 @@ Documentation/admin-guide/mm/index.rst
 
 okay so mm is a subsystem that implements vitual memory and demand paging and a bunch of other stuff.
 
-what is virtual memory?
--> line number 48
-
 what is demand paging?
 -> also referred to as lazy loading. a technique where the sys only loads the page 
 of a program into physical memory only when it is needed.
 
 what is a page?
 chatgpt-> fixed size block of vm, it is usually of 4 or 8kb in size. reduces fragmentation.
-Documentation-> go to line number 94 before that as the Documentation is quite confusing with physical and virtual memory pages.
-start reading linux-6.16.3/Documentation/admin-guide/mm/concepts.rst from line 40.
 
 the mm system can be configured via /proc fs and can be queried via the sysctl(APIs).
 read Documentation/admin-guide/sysctl/vm.rst and in `man 5 proc`.
 read the following to get familiar with jargons:-
 Documentation/admin-guide/mm/concepts.rst.2
-
 
 now i am reading:-
 Documentation/admin-guide/sysctl/vm.rst
@@ -58,6 +52,7 @@ to deal with the physical memory directly.
 
 to avoid this difficulty/complexity the concept of virtual memory was developed.
 
+what is virtual memory?
 The virtual memory 
 abstracts(Hides complex details to offer a simpler interface) 
 

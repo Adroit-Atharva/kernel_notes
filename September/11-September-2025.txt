@@ -1,0 +1,23 @@
+Each physical memory page can be mapped as one or more virtual
+pages. 
+(basically means that one or more virtual pages can be mapped to a single page frame)
+
+These mappings are described by page tables that allow
+translation from a virtual address used by programs to the physical
+memory address. 
+
+The page tables are organized hierarchically.
+
+The tables at the lowest level of the hierarchy contain physical
+addresses of actual pages used by the software. 
+
+The tables at higher
+levels contain physical addresses of the pages belonging to the lower
+levels.
+
+documentation is shit 
+
+the above lines basically mean that lower level page tables' pages are directly mapped to the 
+physical memory's pages.
+and higher level tables' pages are mapped to its lower page table which is again mapped to some other
+lower page table 
