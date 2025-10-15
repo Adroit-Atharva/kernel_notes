@@ -1,0 +1,26 @@
+what is cpumask?
+used to manage a set of CPUs
+decides which CPU manages which specific task
+It’s essentially a bitmask where each bit corresponds to one CPU:
+
+Bit = 1 → CPU is included in the set
+Bit = 0 → CPU is excluded
+
+what is a bitmask?
+A bitmask is a way to store and manipulate multiple Boolean (on/off) values compactly using bits in an integer.
+
+note:- linux kernel theoretically supports up to 4096CPUs, define using NR_CPUS.
+NR_CPUS = maximum CPUs the kernel was compiled to handle.(4096)
+num_possible_cpus() or num_online_cpus() = actual CPUs present or active.
+So, if your system has only 8 CPUs, but NR_CPUS = 4096, you don’t need to allocate a full cpumask for 4096 bits in every mm_struct.
+That’s why the kernel dynamically allocates a smaller one (just enough for your 8 CPUs).
+
+init_mm is of type mm_struct
+mm_struct is used to store info about process's memory — what it owns, where things are, etc.
+init_mm is the very first memory descriptor used by the kernel itself — before and during system initialization.
+it represents kernels own address space
+
+
+designated initializers are better than normally initializing the values of properties of a structure.
+No matter the order of declaration in the struct, the compiler assigns values to the correct members.
+

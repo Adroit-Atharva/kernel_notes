@@ -1,0 +1,11 @@
+to create a tags file just use:
+	ctags R .
+
+do ls -ltr to see presence of the generated tags file
+
+going to explore mm/init_mm.c using ctags
+use CTRL + ] to go to where the function is defined 
+use CTRL + t to come back
+use CTRL + w + ] for the preview of the defined function, can quit using esc, :q
+
+

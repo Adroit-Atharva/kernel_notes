@@ -1,0 +1,22 @@
+what are huge pages?
+
+
+what does performance hit mean?
+it means reduction in speed or efficiency 
+
+what is TLB(translation lookaside buffer)?
+CPUs maintain a cache of
+translations called Translation Lookaside Buffer (or
+TLB). 
+Usually TLB is pretty scarce(low in size) resource and applications with
+large memory working set will experience performance hit(gets slower) because of
+TLB misses.
+
+
+so basically instead of walking all the levels of page tables to translate frequently used vms(virtual memory addresses) 
+into physicall address we can just keep a cache memory(TLB) for the frequently used translations. 
+this improves the efficiency by avoiding the entire walkthrough. 
+higher the TLB hits, better the performances
+higher TLB misses causes slow performances
+higher TLB misses can be occured when the application has a large working memory set
+
