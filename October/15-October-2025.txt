@@ -1,3 +1,6 @@
 huge pages are simple pages of size more than 4kb 
 2mb means huge page
 1gb means gigantic page
+
+these huge pages help system avoid tlb misses to improve overall system performance.
+
